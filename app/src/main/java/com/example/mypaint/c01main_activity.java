@@ -214,7 +214,26 @@ public class c01main_activity extends AppCompatActivity implements View.OnTouchL
         registerReceiver(B03_action_scan, filter3);
 
 
+        initScale();
 
+    }
+
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        initScale();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        initScale();
+    }
+
+
+    public void initScale(){
         paintView.post(new Runnable() {
             @Override
             public void run() {
@@ -229,11 +248,7 @@ public class c01main_activity extends AppCompatActivity implements View.OnTouchL
                 MY_width  = width;
             }
         });
-
     }
-
-
-
 
 
     // 步骤1：自定义Handler子类（继承Handler类） & 复写handleMessage（）方法
@@ -334,9 +349,11 @@ public class c01main_activity extends AppCompatActivity implements View.OnTouchL
                     Log.d(TAG, "path_Move" + msg.obj);
                     String pathStr = (String) msg.obj;
                     String[] Points = pathStr.split(",");
-                    paintView.touchMove(Float.parseFloat(Points[0]) * MY_width , Float.parseFloat(Points[1]) * MY_height);
-                    Log.d(TAG, "path_Move x:" + Float.parseFloat(Points[0]) * MY_width + "y:" + Float.parseFloat(Points[1]) * MY_height);
-                    paintView.invalidate();
+                    if ( Points.length == 2 ) {
+                        paintView.touchMove(Float.parseFloat(Points[0]) * MY_width, Float.parseFloat(Points[1]) * MY_height);
+                        Log.d(TAG, "path_Move x:" + Float.parseFloat(Points[0]) * MY_width + "y:" + Float.parseFloat(Points[1]) * MY_height);
+                        paintView.invalidate();
+                    }
                 }
                 break;
                 case MESSAGE_PATH_ENDS:
@@ -776,6 +793,8 @@ public class c01main_activity extends AppCompatActivity implements View.OnTouchL
                     }
 
 
+
+
                     switch (sendCode){
                         case MESSAGE_FONT_SIZE:
                             mDrawHandler.obtainMessage( MESSAGE_FONT_SIZE,arg1,0,"").sendToTarget();
@@ -784,11 +803,17 @@ public class c01main_activity extends AppCompatActivity implements View.OnTouchL
                             mDrawHandler.obtainMessage( MESSAGE_FONT_COLOR,arg1,0,"").sendToTarget();
                             break;
                         case MESSAGE_PATH_START: {
+                            if ( readSTR.length > 3 ) {
+                                break;
+                            }
                             String path = readSTR[1] + "," + readSTR[2];
                             mDrawHandler.obtainMessage(MainActivity.MESSAGE_PATH_START, 0, 0, path).sendToTarget();
                         }
                             break;
                         case MESSAGE_PATH_MOVE: {
+                            if ( readSTR.length > 3 ) {
+                                break;
+                            }
                             String path = readSTR[1] + "," + readSTR[2];
                             mDrawHandler.obtainMessage(MainActivity.MESSAGE_PATH_MOVE, 0, 0, path).sendToTarget();
                         }
@@ -903,6 +928,10 @@ public class c01main_activity extends AppCompatActivity implements View.OnTouchL
             paintView.SET_FromRemove(isMaster);
             button_admin.setBackgroundColor(Color.GREEN);
             button_admin.setText(" MASTER ");
+
+            mPaintHandler.obtainMessage(MESSAGE_FONT_COLOR, paintView.currentColor,0,"").sendToTarget();
+
+            mPaintHandler.obtainMessage(MESSAGE_FONT_SIZE, paintView.strokeWidth ,0,"").sendToTarget();
         }
 
     }

@@ -46,9 +46,9 @@ public class PaintView extends View {
 
    // public Stack< ArrayList<FingerPath> >  myLines = new Stack< ArrayList<FingerPath> >();
 
-    private int currentColor;
+    public  int currentColor;
     private int backgroundColor = Color.WHITE;
-    private int strokeWidth;
+    public  int strokeWidth;
     private boolean emboss;
     private boolean blur;
     private MaskFilter mEmboss;
