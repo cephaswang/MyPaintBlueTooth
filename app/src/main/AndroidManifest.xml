@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.mypaint">
 
+    //  https://youtu.be/HW-NpG0uKm4
+
     <uses-permission android:name="aandroid.permission.WRITE_MEDIA_STORAGE" />
     <uses-permission android:name="aandroid.permission.READ_MEDIA_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />

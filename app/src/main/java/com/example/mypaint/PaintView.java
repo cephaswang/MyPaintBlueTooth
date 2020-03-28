@@ -1,5 +1,7 @@
 package com.example.mypaint;
 
+// https://youtu.be/HW-NpG0uKm4
+
 // https://www.ssaurel.com/blog/learn-to-create-a-paint-application-for-android/
 // https://www.youtube.com/watch?v=uJGcmGXaQ0o
 // Learn to create a Paint Application with Android Studio
@@ -46,7 +48,7 @@ public class PaintView extends View {
 
    // public Stack< ArrayList<FingerPath> >  myLines = new Stack< ArrayList<FingerPath> >();
 
-    public  int currentColor;
+    public  int currentColor   = Color.RED;
     private int backgroundColor = Color.WHITE;
     public  int strokeWidth;
     private boolean emboss;
